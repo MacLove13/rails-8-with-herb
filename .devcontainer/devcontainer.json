@@ -1,0 +1,39 @@
+{
+  "name": "rails-8-with-herb",
+  "dockerComposeFile": "docker-compose.yml",
+  "service": "rails-app",
+  "workspaceFolder": "/workspaces/rails-8-with-herb",
+  "forwardPorts": [3000, 5432],
+  "portsAttributes": {
+    "3000": {
+      "label": "Rails",
+      "onAutoForward": "notify"
+    },
+    "5432": {
+      "label": "PostgreSQL",
+      "onAutoForward": "silent"
+    }
+  },
+  "postCreateCommand": "bin/setup",
+  "remoteUser": "vscode",
+  "features": {
+    "ghcr.io/devcontainers/features/github-cli:1": {}
+  },
+  "customizations": {
+    "vscode": {
+      "settings": {
+        "editor.formatOnSave": true,
+        "[ruby]": {
+          "editor.defaultFormatter": "Shopify.ruby-lsp"
+        }
+      },
+      "extensions": [
+        "Shopify.ruby-lsp",
+        "KoichiSasada.vscode-rdbg",
+        "misogi.ruby-rubocop",
+        "mtxr.sqltools",
+        "mtxr.sqltools-driver-pg"
+      ]
+    }
+  }
+}
