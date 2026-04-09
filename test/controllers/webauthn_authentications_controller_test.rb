@@ -69,6 +69,7 @@ class WebauthnAuthenticationsControllerTest < ActionDispatch::IntegrationTest
     assert_response :success
     json = JSON.parse(response.body)
     assert_equal "ok", json["status"]
+    assert cookies[:session_id], "Session cookie should be set after successful authentication"
   ensure
     credential&.destroy
   end

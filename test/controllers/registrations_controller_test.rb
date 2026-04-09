@@ -18,6 +18,8 @@ class RegistrationsControllerTest < ActionDispatch::IntegrationTest
       }
     end
     assert_redirected_to root_path
+  ensure
+    User.find_by(email_address: "newuser@example.com")&.destroy
   end
 
   test "create with invalid params re-renders new form" do
