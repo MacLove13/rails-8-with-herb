@@ -1,0 +1,29 @@
+<div class="container">
+  <header class="hero">
+    <h1>Rails 8 with Herb</h1>
+    <p class="tagline">Powered by Rails 8, Solid Queue, Mission Control, and the Herb HTML+ERB Toolchain</p>
+  </header>
+
+  <section class="features">
+    <article class="feature-card">
+      <h2>⚙️ Solid Queue</h2>
+      <p>Database-backed job queue built on Active Job and SQLite.</p>
+      <p>Queued jobs: <strong><%= @jobs_count %></strong></p>
+    </article>
+
+    <article class="feature-card">
+      <h2>🎛️ Mission Control</h2>
+      <p>Monitor and manage background jobs from the dashboard.</p>
+      <%= link_to "Open Jobs Dashboard →", "/jobs", class: "btn" %>
+    </article>
+
+    <article class="feature-card">
+      <h2>🌿 Herb</h2>
+      <p>
+        HTML-aware ERB rendering engine and developer toolchain.
+        This page is rendered using <code>Herb::Engine</code>.
+      </p>
+      <%= link_to "Herb Documentation →", "https://herb-tools.dev", class: "btn", target: "_blank", rel: "noopener noreferrer" %>
+    </article>
+  </section>
+</div>
