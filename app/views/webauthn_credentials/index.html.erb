@@ -1,0 +1,15 @@
+<div class="container">
+  <h1>Passkeys</h1>
+  <% if @credentials.any? %>
+    <ul>
+      <% @credentials.each do |credential| %>
+        <li>
+          <%= credential.nickname %>
+          <%= button_to "Remove", webauthn_credential_path(credential), method: :delete %>
+        </li>
+      <% end %>
+    </ul>
+  <% else %>
+    <p>No passkeys registered.</p>
+  <% end %>
+</div>
