@@ -35,5 +35,4 @@ class RegistrationsControllerTest < ActionDispatch::IntegrationTest
     end
     assert_response :unprocessable_entity
   end
-
 end
