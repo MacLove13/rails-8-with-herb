@@ -1,0 +1,48 @@
+<div class="container">
+  <div class="profile-card">
+    <h1>My Profile</h1>
+
+    <div class="user-info">
+      <p><strong>Name:</strong> <%= Current.user.name %></p>
+      <p><strong>Email:</strong> <%= Current.user.email_address %></p>
+      <p><strong>Admin:</strong> <%= Current.user.is_admin? ? "Yes" : "No" %></p>
+      <p><strong>Member since:</strong> <%= Current.user.created_at.strftime("%B %d, %Y") %></p>
+    </div>
+
+    <div class="passkeys-section">
+      <h2>Passkeys</h2>
+      <% if Current.user.webauthn_credentials.any? %>
+        <ul class="passkeys-list">
+          <% Current.user.webauthn_credentials.each do |credential| %>
+            <li>
+              <%= credential.nickname %>
+              <span class="date">Added <%= credential.created_at.strftime("%B %d, %Y") %></span>
+              <%= button_to "Remove", webauthn_credential_path(credential), method: :delete, class: "btn btn-danger btn-sm", data: { confirm: "Remove this passkey?" } %>
+            </li>
+          <% end %>
+        </ul>
+      <% else %>
+        <p>No passkeys registered.</p>
+      <% end %>
+
+      <div class="add-passkey">
+        <button id="register-passkey" class="btn"
+                data-controller="passkey-register"
+                data-passkey-register-options-url-value="<%= new_registration_options_webauthn_credentials_path %>">
+          Add Passkey
+        </button>
+      </div>
+    </div>
+
+    <% if Current.user.is_admin? %>
+      <div class="admin-section">
+        <h2>Admin</h2>
+        <%= link_to "Mission Control Dashboard", "/jobs", class: "btn" %>
+      </div>
+    <% end %>
+
+    <div class="actions">
+      <%= button_to "Sign out", session_path, method: :delete, class: "btn btn-secondary" %>
+    </div>
+  </div>
+</div>

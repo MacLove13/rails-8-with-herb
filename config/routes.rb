@@ -1,8 +1,33 @@
 Rails.application.routes.draw do
-  # Mission Control Jobs dashboard (Solid Queue monitoring)
-  mount MissionControl::Jobs::Engine, at: "/jobs"
+  resource :session
+  resources :passwords, param: :token
 
-  # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
+  # Registration
+  get "register", to: "registrations#new", as: :register
+  post "register", to: "registrations#create"
+
+  # Profile
+  get "profile", to: "profile#show", as: :profile
+
+  # WebAuthn credentials (passkey registration)
+  resources :webauthn_credentials, only: %i[index create destroy] do
+    collection do
+      post :new_registration_options
+    end
+  end
+
+  # WebAuthn authentication (passkey login)
+  post "webauthn_authentications/new_authentication_options",
+       to: "webauthn_authentications#new_authentication_options",
+       as: :new_webauthn_authentication_options
+  post "webauthn_authentications",
+       to: "webauthn_authentications#create",
+       as: :webauthn_authentication
+
+  # Mission Control Jobs dashboard restricted to admin users
+  constraints AdminConstraint.new do
+    mount MissionControl::Jobs::Engine, at: "/jobs"
+  end
 
   # Reveal health status on /up that returns 200 if the app boots with no exceptions, otherwise 500.
   # Can be used by load balancers and uptime monitors to verify that the app is live.

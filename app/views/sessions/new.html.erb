@@ -1,0 +1,38 @@
+<%= tag.div(flash[:alert], style: "color:red") if flash[:alert] %>
+<%= tag.div(flash[:notice], style: "color:green") if flash[:notice] %>
+
+<div class="container">
+  <div class="auth-card">
+    <h1>Sign In</h1>
+
+    <%= form_with url: session_path do |form| %>
+      <div class="field">
+        <%= form.label :email_address, "Email" %>
+        <%= form.email_field :email_address, required: true, autofocus: true, autocomplete: "username", value: params[:email_address] %>
+      </div>
+      <div class="field">
+        <%= form.label :password %>
+        <%= form.password_field :password, required: true, autocomplete: "current-password", maxlength: 72 %>
+      </div>
+      <div class="actions">
+        <%= form.submit "Sign in", class: "btn" %>
+      </div>
+    <% end %>
+
+    <div class="passkey-login">
+      <p>— or —</p>
+      <button id="passkey-login" class="btn btn-secondary"
+              data-controller="passkey-authenticate"
+              data-passkey-authenticate-options-url-value="<%= new_webauthn_authentication_options_path %>"
+              data-passkey-authenticate-authenticate-url-value="<%= webauthn_authentication_path %>">
+        Sign in with Passkey
+      </button>
+    </div>
+
+    <div class="auth-links">
+      <%= link_to "Forgot password?", new_password_path %>
+      &nbsp;|&nbsp;
+      <%= link_to "Create an account", register_path %>
+    </div>
+  </div>
+</div>
