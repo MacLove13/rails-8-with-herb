@@ -18,8 +18,12 @@ module ActiveSupport
     # Run tests in parallel with specified workers
     parallelize(workers: :number_of_processors)
 
-    parallelize_setup do
-      SimpleCov.command_name "#{SimpleCov.command_name}-#{Process.pid}"
+    parallelize_setup do |worker|
+      SimpleCov.command_name "#{SimpleCov.command_name}-#{worker}"
+    end
+
+    parallelize_teardown do |_worker|
+      SimpleCov.result
     end
 
     # Setup all fixtures in test/fixtures/*.yml for all tests in alphabetical order.
