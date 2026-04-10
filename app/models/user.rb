@@ -1,7 +1,11 @@
 class User < ApplicationRecord
+  include Topsecret::Model
+
   has_secure_password
   has_many :sessions, dependent: :destroy
   has_many :webauthn_credentials, dependent: :destroy
+
+  topsecret :name
 
   validates :name, presence: true
   validates :email_address, presence: true, uniqueness: { case_sensitive: false }

@@ -63,4 +63,23 @@ class UserTest < ActiveSupport::TestCase
     result = User.authenticate_by(email_address: user.email_address, password: "wrong")
     assert_nil result
   end
+
+  test "name is encrypted at rest" do
+    user = User.create!(name: "Encrypted Bob", email_address: "encrypted@example.com", password: "password")
+    raw = User.connection.select_value(
+      "SELECT name FROM users WHERE id = #{user.id}"
+    )
+    assert_not_equal user.name, raw, "name should be stored encrypted, not as plain text"
+  ensure
+    user&.destroy
+  end
+
+  test "name is decrypted transparently on read" do
+    user = User.create!(name: "Encrypted Bob", email_address: "encrypted@example.com", password: "password")
+    reloaded = User.find(user.id)
+    assert_equal "Encrypted Bob", reloaded.name
+  ensure
+    user&.destroy
+  end
 end
+
