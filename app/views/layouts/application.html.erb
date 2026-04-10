@@ -24,6 +24,11 @@
   </head>
 
   <body>
+    <% if authenticated? %>
+      <nav class="app-nav" aria-label="User menu">
+        <%= button_to "Sign out", session_path, method: :delete, class: "btn-link" %>
+      </nav>
+    <% end %>
     <%= yield %>
   </body>
 </html>

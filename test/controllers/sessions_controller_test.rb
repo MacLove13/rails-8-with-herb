@@ -15,6 +15,16 @@ class SessionsControllerTest < ActionDispatch::IntegrationTest
     assert cookies[:session_id]
   end
 
+  test "create with valid credentials redirects to stored return_to URL" do
+    get profile_path
+    assert_redirected_to new_session_path
+
+    post session_path, params: { email_address: @user.email_address, password: "password" }
+
+    assert_redirected_to profile_url
+    assert cookies[:session_id]
+  end
+
   test "create with invalid credentials" do
     post session_path, params: { email_address: @user.email_address, password: "wrong" }
 

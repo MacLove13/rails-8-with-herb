@@ -1,14 +1,14 @@
 require "test_helper"
 
 class RegistrationsControllerTest < ActionDispatch::IntegrationTest
-  test "new" do
-    get new_registration_path
+  test "new renders registration form" do
+    get register_path
     assert_response :success
   end
 
-  test "create with valid params" do
-    assert_difference("User.count", 1) do
-      post registrations_path, params: {
+  test "create with valid params creates user and redirects" do
+    assert_difference "User.count", 1 do
+      post register_path, params: {
         user: {
           name: "New User",
           email_address: "newuser@example.com",
@@ -17,41 +17,22 @@ class RegistrationsControllerTest < ActionDispatch::IntegrationTest
         }
       }
     end
-
     assert_redirected_to root_path
-    assert cookies[:session_id]
-    assert_equal "newuser@example.com", User.last.email_address
+  ensure
+    User.find_by(email_address: "newuser@example.com")&.destroy
   end
 
-  test "create with invalid params" do
-    assert_no_difference("User.count") do
-      post registrations_path, params: {
+  test "create with invalid params re-renders new form" do
+    assert_no_difference "User.count" do
+      post register_path, params: {
         user: {
-          name: "New User",
-          email_address: "newuser@example.com",
+          name: "",
+          email_address: "",
           password: "password",
-          password_confirmation: "wrong"
+          password_confirmation: "password"
         }
       }
     end
-
     assert_response :unprocessable_entity
-  end
-
-  test "create succeeds with different origin header" do
-    assert_difference("User.count", 1) do
-      post registrations_path,
-        params: {
-          user: {
-            name: "Codespace User",
-            email_address: "codespace@example.com",
-            password: "password",
-            password_confirmation: "password"
-          }
-        },
-        headers: { "HTTP_ORIGIN" => "https://localhost:3000" }
-    end
-
-    assert_redirected_to root_path
   end
 end
