@@ -63,4 +63,20 @@ class UserTest < ActiveSupport::TestCase
     result = User.authenticate_by(email_address: user.email_address, password: "wrong")
     assert_nil result
   end
+
+  test "email_address is stored encrypted in the database" do
+    user = User.take
+    raw = ActiveRecord::Base.connection.select_value(
+      "SELECT email_address FROM users WHERE id = $1", nil, [ user.id ]
+    )
+    assert_not_equal user.email_address, raw
+  end
+
+  test "name is stored encrypted in the database" do
+    user = User.take
+    raw = ActiveRecord::Base.connection.select_value(
+      "SELECT name FROM users WHERE id = $1", nil, [ user.id ]
+    )
+    assert_not_equal user.name, raw
+  end
 end

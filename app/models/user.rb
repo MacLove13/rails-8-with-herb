@@ -3,8 +3,11 @@ class User < ApplicationRecord
   has_many :sessions, dependent: :destroy
   has_many :webauthn_credentials, dependent: :destroy
 
+  encrypts :name
+  encrypts :email_address, deterministic: true
+
   validates :name, presence: true
-  validates :email_address, presence: true, uniqueness: { case_sensitive: false }
+  validates :email_address, presence: true, uniqueness: true
 
   normalizes :email_address, with: ->(e) { e.strip.downcase }
 end

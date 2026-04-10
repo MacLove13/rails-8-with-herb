@@ -84,4 +84,13 @@ Rails.application.configure do
   # config.generators.apply_rubocop_autocorrect_after_generate!
 
   config.hosts << "automatic-space-funicular-j4qg7j6v5q93qvvj-3000.app.github.dev"
+
+  # Active Record Encryption keys for the development environment.
+  # In production, set these via Rails credentials or environment variables:
+  #   ACTIVE_RECORD_ENCRYPTION_PRIMARY_KEY
+  #   ACTIVE_RECORD_ENCRYPTION_DETERMINISTIC_KEY
+  #   ACTIVE_RECORD_ENCRYPTION_KEY_DERIVATION_SALT
+  config.active_record.encryption.primary_key = ENV.fetch("ACTIVE_RECORD_ENCRYPTION_PRIMARY_KEY", "dev-primary-key-for-active-record-enc")
+  config.active_record.encryption.deterministic_key = ENV.fetch("ACTIVE_RECORD_ENCRYPTION_DETERMINISTIC_KEY", "dev-deterministic-key-for-active-reco")
+  config.active_record.encryption.key_derivation_salt = ENV.fetch("ACTIVE_RECORD_ENCRYPTION_KEY_DERIVATION_SALT", "dev-key-derivation-salt-for-active-rec")
 end
