@@ -67,7 +67,7 @@ class UserTest < ActiveSupport::TestCase
   test "name is encrypted at rest" do
     user = User.create!(name: "Encrypted Bob", email_address: "encrypted@example.com", password: "password")
     raw = User.connection.select_value(
-      "SELECT name FROM users WHERE id = #{user.id}"
+      User.sanitize_sql([ "SELECT name FROM users WHERE id = ?", user.id ])
     )
     assert_not_equal user.name, raw, "name should be stored encrypted, not as plain text"
   ensure
