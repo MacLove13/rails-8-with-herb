@@ -20,6 +20,7 @@ class RegistrationsControllerTest < ActionDispatch::IntegrationTest
 
     assert_redirected_to root_path
     assert cookies[:session_id]
+    assert_equal "newuser@example.com", User.last.email_address
   end
 
   test "create with invalid params" do
@@ -37,7 +38,7 @@ class RegistrationsControllerTest < ActionDispatch::IntegrationTest
     assert_response :unprocessable_entity
   end
 
-  test "create with mismatched origin header does not raise InvalidAuthenticityToken" do
+  test "create succeeds with different origin header" do
     assert_difference("User.count", 1) do
       post registrations_path,
         params: {
