@@ -70,6 +70,13 @@ Rails.application.configure do
   # Uncomment if you wish to allow Action Cable access from any origin.
   # config.action_cable.disable_request_forgery_protection = true
 
+  # Disable Origin header check to allow form submissions when accessing the app
+  # through GitHub Codespaces or Dev Containers, where the HTTP Origin header
+  # (e.g. https://localhost:3000) may not match the request base URL
+  # (e.g. https://<codespace-name>-3000.app.github.dev). The CSRF token is
+  # still verified, so requests remain protected against cross-site forgery.
+  config.action_controller.forgery_protection_origin_check = false
+
   # Raise error when a before_action's only/except options reference missing actions.
   config.action_controller.raise_on_missing_callback_actions = true
 
