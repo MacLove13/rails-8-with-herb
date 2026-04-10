@@ -68,4 +68,6 @@ group :test do
   gem "selenium-webdriver"
   # Code coverage [https://github.com/simplecov-ruby/simplecov]
   gem "simplecov", require: false
+  # Pin minitest to 5.x -- minitest 6.x removed minitest/mock (stub) API
+  gem "minitest", "< 6"
 end
