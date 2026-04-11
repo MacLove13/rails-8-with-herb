@@ -13,10 +13,17 @@ class WebauthnCredentialsController < ApplicationController
   end
 
   def create
+    challenge = session.delete(:webauthn_registration_challenge)
+
+    unless challenge
+      render json: { error: "Registration challenge not found or expired" }, status: :unprocessable_entity
+      return
+    end
+
     webauthn_credential = WebAuthn::Credential.from_create(params)
 
     begin
-      webauthn_credential.verify(session[:webauthn_registration_challenge])
+      webauthn_credential.verify(challenge)
 
       credential = Current.user.webauthn_credentials.create!(
         external_id: webauthn_credential.id,

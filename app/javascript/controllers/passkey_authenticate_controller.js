@@ -55,7 +55,12 @@ export default class extends Controller {
 
       const result = await authResponse.json()
       if (result.status === "ok") {
-        window.location.href = result.redirect_url
+        const redirectUrl = new URL(result.redirect_url, window.location.href)
+        if (redirectUrl.origin === window.location.origin) {
+          window.location.href = redirectUrl.href
+        } else {
+          window.location.href = "/"
+        }
       } else {
         alert("Passkey sign-in failed: " + result.error)
       }

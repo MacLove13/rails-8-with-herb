@@ -8,6 +8,18 @@ class WebauthnAuthenticationsControllerTest < ActionDispatch::IntegrationTest
     assert json.key?("challenge")
   end
 
+  test "create returns unauthorized when authentication challenge is missing" do
+    # Do NOT call new_authentication_options first, so no challenge is in the session
+    mock_credential = Object.new
+    WebAuthn::Credential.stub(:from_get, mock_credential) do
+      post webauthn_authentication_path, params: {}, as: :json
+    end
+
+    assert_response :unauthorized
+    json = JSON.parse(response.body)
+    assert_match "challenge", json["error"].downcase
+  end
+
   test "create returns unauthorized when credential not found" do
     post new_webauthn_authentication_options_path
 

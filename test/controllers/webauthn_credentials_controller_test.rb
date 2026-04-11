@@ -46,6 +46,18 @@ class WebauthnCredentialsControllerTest < ActionDispatch::IntegrationTest
     @user.webauthn_credentials.where(external_id: "new_passkey_id").destroy_all
   end
 
+  test "create returns unprocessable_entity when registration challenge is missing" do
+    # Do NOT call new_registration_options first, so no challenge is in the session
+    mock_cred = Object.new
+    WebAuthn::Credential.stub(:from_create, mock_cred) do
+      post webauthn_credentials_path, params: { nickname: "My Passkey" }, as: :json
+    end
+
+    assert_response :unprocessable_entity
+    json = JSON.parse(response.body)
+    assert_match "challenge", json["error"].downcase
+  end
+
   test "create returns unprocessable_entity when webauthn verification fails" do
     post new_registration_options_webauthn_credentials_path
 
