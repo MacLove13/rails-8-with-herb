@@ -32,7 +32,8 @@
         "KoichiSasada.vscode-rdbg",
         "misogi.ruby-rubocop",
         "mtxr.sqltools",
-        "mtxr.sqltools-driver-pg"
+        "mtxr.sqltools-driver-pg",
+        "herb-tools.herb"
       ]
     }
   }
