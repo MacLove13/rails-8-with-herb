@@ -1,8 +1,40 @@
-<h1>Forgot your password?</h1>
+<div class="min-h-screen bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900 flex items-center justify-center p-4">
+  <div class="w-full max-w-md">
+    <div class="text-center mb-8">
+      <h1 class="text-4xl font-bold text-white tracking-tight">Forgot password?</h1>
+      <p class="text-slate-400 mt-2">Enter your email and we'll send you a reset link</p>
+    </div>
 
-<%= tag.div(flash[:alert], style: "color:red") if flash[:alert] %>
+    <% if flash[:alert] %>
+      <div class="mb-4 rounded-lg bg-red-500/10 border border-red-500/20 px-4 py-3 text-red-400 text-sm flex items-center gap-2">
+        <svg class="w-4 h-4 shrink-0" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.28 7.22a.75.75 0 00-1.06 1.06L8.94 10l-1.72 1.72a.75.75 0 101.06 1.06L10 11.06l1.72 1.72a.75.75 0 101.06-1.06L11.06 10l1.72-1.72a.75.75 0 00-1.06-1.06L10 8.94 8.28 7.22z" clip-rule="evenodd"/></svg>
+        <%= flash[:alert] %>
+      </div>
+    <% end %>
 
-<%= form_with url: passwords_path do |form| %>
-  <%= form.email_field :email_address, required: true, autofocus: true, autocomplete: "username", placeholder: "Enter your email address", value: params[:email_address] %><br>
-  <%= form.submit "Email reset instructions" %>
-<% end %>
+    <div class="bg-white/5 backdrop-blur-sm border border-white/10 rounded-2xl p-8 shadow-2xl">
+      <%= form_with url: passwords_path do |form| %>
+        <div class="space-y-5">
+          <div>
+            <label class="block text-sm font-medium text-slate-300 mb-1.5">Email address</label>
+            <%= form.email_field :email_address,
+                  required: true, autofocus: true,
+                  autocomplete: "username",
+                  placeholder: "you@example.com",
+                  value: params[:email_address],
+                  class: "w-full rounded-lg bg-white/5 border border-white/10 text-white placeholder-slate-500 px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent transition" %>
+          </div>
+
+          <div class="pt-1">
+            <%= form.submit "Send reset instructions",
+                  class: "w-full rounded-lg bg-purple-600 hover:bg-purple-500 text-white font-semibold py-2.5 px-4 text-sm transition cursor-pointer focus:outline-none focus:ring-2 focus:ring-purple-500 focus:ring-offset-2 focus:ring-offset-slate-900" %>
+          </div>
+        </div>
+      <% end %>
+
+      <div class="mt-6 text-center text-sm">
+        <%= link_to "← Back to sign in", new_session_path, class: "text-slate-400 hover:text-white transition" %>
+      </div>
+    </div>
+  </div>
+</div>

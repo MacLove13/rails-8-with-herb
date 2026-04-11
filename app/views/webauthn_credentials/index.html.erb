@@ -1,15 +1,21 @@
-<div class="container">
-  <h1>Passkeys</h1>
-  <% if @credentials.any? %>
-    <ul>
-      <% @credentials.each do |credential| %>
-        <li>
-          <%= credential.nickname %>
-          <%= button_to "Remove", webauthn_credential_path(credential), method: :delete %>
-        </li>
+<div class="min-h-screen bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900 py-12 px-4">
+  <div class="max-w-lg mx-auto">
+    <h1 class="text-3xl font-bold text-white tracking-tight mb-8">Passkeys</h1>
+
+    <div class="bg-white/5 backdrop-blur-sm border border-white/10 rounded-2xl p-7 shadow-2xl">
+      <% if @credentials.any? %>
+        <ul class="space-y-2">
+          <% @credentials.each do |credential| %>
+            <li class="flex items-center justify-between rounded-lg bg-white/5 border border-white/10 px-4 py-3">
+              <span class="text-white text-sm font-medium"><%= credential.nickname %></span>
+              <%= button_to "Remove", webauthn_credential_path(credential), method: :delete,
+                    class: "rounded-lg border border-red-500/30 bg-red-500/10 hover:bg-red-500/20 text-red-400 text-xs font-medium py-1.5 px-3 transition cursor-pointer" %>
+            </li>
+          <% end %>
+        </ul>
+      <% else %>
+        <p class="text-slate-400 text-sm">No passkeys registered.</p>
       <% end %>
-    </ul>
-  <% else %>
-    <p>No passkeys registered.</p>
-  <% end %>
+    </div>
+  </div>
 </div>

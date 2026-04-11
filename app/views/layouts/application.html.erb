@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
+    <meta charset="utf-8">
     <title><%= content_for(:title) || "Rails 8 With Herb" %></title>
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <meta name="apple-mobile-web-app-capable" content="yes">
@@ -20,14 +21,22 @@
 
     <%# Includes all stylesheet files in app/assets/stylesheets %>
     <%= stylesheet_link_tag :app, "data-turbo-track": "reload" %>
+    <%# Tailwind CSS v4 for utility-first styling %>
+    <script src="/tailwindcss.js"></script>
     <%= javascript_importmap_tags %>
   </head>
 
-  <body>
+  <body class="bg-slate-900 text-white antialiased">
     <% if authenticated? %>
-      <nav class="app-nav" aria-label="User menu">
-        <%= button_to "Sign out", session_path, method: :delete, class: "btn-link" %>
+      <nav class="fixed top-0 inset-x-0 z-50 flex items-center justify-between px-6 py-3 bg-white/5 backdrop-blur-sm border-b border-white/10" aria-label="User menu">
+        <%= link_to "Rails 8 × Herb", root_path, class: "text-white font-semibold text-sm tracking-tight hover:text-purple-300 transition" %>
+        <div class="flex items-center gap-4">
+          <%= link_to "Profile", profile_path, class: "text-slate-400 hover:text-white text-sm transition" %>
+          <%= button_to "Sign out", session_path, method: :delete,
+                class: "rounded-lg border border-white/20 bg-white/5 hover:bg-white/10 text-slate-300 text-sm font-medium py-1.5 px-4 transition cursor-pointer" %>
+        </div>
       </nav>
+      <div class="h-14"></div>
     <% end %>
     <%= yield %>
   </body>
