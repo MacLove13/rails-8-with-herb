@@ -30,4 +30,3 @@ class ApplicationControllerTest < ActiveSupport::TestCase
     assert_nil @controller.send(:find_current_auditor)
   end
 end
-
