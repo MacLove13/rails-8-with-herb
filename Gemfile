@@ -31,6 +31,8 @@ gem "solid_cache"
 gem "solid_queue"
 gem "mission_control-jobs"
 gem "solid_cable"
+gem "console1984"
+gem "audits1984"
 
 # Reduces boot times through caching; required in config/boot.rb
 gem "bootsnap", require: false

@@ -5,4 +5,8 @@ class ApplicationController < ActionController::Base
 
   # Changes to the importmap will invalidate the etag for HTML responses
   stale_when_importmap_changes
+
+  def find_current_auditor
+    Current.user if Current.user&.is_admin?
+  end
 end

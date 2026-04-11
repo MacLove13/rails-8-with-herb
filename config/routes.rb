@@ -27,6 +27,7 @@ Rails.application.routes.draw do
   # Mission Control Jobs dashboard restricted to admin users
   constraints AdminConstraint.new do
     mount MissionControl::Jobs::Engine, at: "/jobs"
+    mount Audits1984::Engine, at: "/console"
   end
 
   # Reveal health status on /up that returns 200 if the app boots with no exceptions, otherwise 500.
