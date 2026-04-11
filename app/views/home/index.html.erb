@@ -1,29 +1,34 @@
-<div class="container">
-  <header class="hero">
-    <h1>Rails 8 with Herb</h1>
-    <p class="tagline">Powered by Rails 8, Solid Queue, Mission Control, and the Herb HTML+ERB Toolchain</p>
-  </header>
+<div class="min-h-screen bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900 py-16 px-4">
+  <div class="max-w-5xl mx-auto">
+    <header class="text-center mb-16">
+      <h1 class="text-5xl font-bold text-white tracking-tight mb-3">Rails 8 with Herb</h1>
+      <p class="text-slate-400 text-lg max-w-xl mx-auto">Powered by Rails 8, Solid Queue, Mission Control, and the Herb HTML+ERB Toolchain</p>
+    </header>
 
-  <section class="features">
-    <article class="feature-card">
-      <h2>⚙️ Solid Queue</h2>
-      <p>Database-backed job queue built on Active Job and SQLite.</p>
-      <p>Queued jobs: <strong><%= @jobs_count %></strong></p>
-    </article>
+    <section class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+      <article class="bg-white/5 backdrop-blur-sm border border-white/10 rounded-2xl p-7 shadow-2xl flex flex-col gap-3">
+        <h2 class="text-xl font-semibold text-white">⚙️ Solid Queue</h2>
+        <p class="text-slate-400 text-sm flex-1">Database-backed job queue built on Active Job and SQLite.</p>
+        <p class="text-slate-300 text-sm">Queued jobs: <strong class="text-white font-semibold"><%= @jobs_count %></strong></p>
+      </article>
 
-    <article class="feature-card">
-      <h2>🎛️ Mission Control</h2>
-      <p>Monitor and manage background jobs from the dashboard.</p>
-      <%= link_to "Open Jobs Dashboard →", "/jobs", class: "btn" %>
-    </article>
+      <article class="bg-white/5 backdrop-blur-sm border border-white/10 rounded-2xl p-7 shadow-2xl flex flex-col gap-3">
+        <h2 class="text-xl font-semibold text-white">🎛️ Mission Control</h2>
+        <p class="text-slate-400 text-sm flex-1">Monitor and manage background jobs from the dashboard.</p>
+        <%= link_to "Open Jobs Dashboard →", "/jobs",
+              class: "inline-block rounded-lg bg-purple-600 hover:bg-purple-500 text-white font-semibold py-2 px-4 text-sm transition text-center" %>
+      </article>
 
-    <article class="feature-card">
-      <h2>🌿 Herb</h2>
-      <p>
-        HTML-aware ERB rendering engine and developer toolchain.
-        This page is rendered using <code>Herb::Engine</code>.
-      </p>
-      <%= link_to "Herb Documentation →", "https://herb-tools.dev", class: "btn", target: "_blank", rel: "noopener noreferrer" %>
-    </article>
-  </section>
+      <article class="bg-white/5 backdrop-blur-sm border border-white/10 rounded-2xl p-7 shadow-2xl flex flex-col gap-3">
+        <h2 class="text-xl font-semibold text-white">🌿 Herb</h2>
+        <p class="text-slate-400 text-sm flex-1">
+          HTML-aware ERB rendering engine and developer toolchain.
+          This page is rendered using <code class="bg-white/10 px-1.5 py-0.5 rounded text-purple-300 font-mono text-xs">Herb::Engine</code>.
+        </p>
+        <%= link_to "Herb Documentation →", "https://herb-tools.dev",
+              class: "inline-block rounded-lg bg-purple-600 hover:bg-purple-500 text-white font-semibold py-2 px-4 text-sm transition text-center",
+              target: "_blank", rel: "noopener noreferrer" %>
+      </article>
+    </section>
+  </div>
 </div>
