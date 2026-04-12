@@ -8,6 +8,13 @@ class WebauthnAuthenticationsController < ApplicationController
   end
 
   def create
+    challenge = session.delete(:webauthn_authentication_challenge)
+
+    unless challenge
+      render json: { error: "Authentication challenge not found or expired" }, status: :unauthorized
+      return
+    end
+
     webauthn_credential = WebAuthn::Credential.from_get(params)
     stored_credential = WebauthnCredential.find_by(external_id: webauthn_credential.id)
 
@@ -18,7 +25,7 @@ class WebauthnAuthenticationsController < ApplicationController
 
     begin
       webauthn_credential.verify(
-        session[:webauthn_authentication_challenge],
+        challenge,
         public_key: stored_credential.public_key,
         sign_count: stored_credential.sign_count
       )
